@@ -1,0 +1,33 @@
+# R files
+
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+*.Rproj
+.Rproj.user/
+
+# Quarto files
+
+.quarto/
+*_cache/
+**/_cache/
+**/_freeze/
+*_files/
+*.utf8.md
+*.knit.md
+
+# renv files
+
+renv/library/
+renv/staging/
+renv/local/
+renv/sandbox/
+
+# Datasets
+
+/Pseudonymization_process/Omit_these_datasets/
+/Pseudonymization_process/Leaderboard.xlsx
+/Pseudonymization_process/Master_dataset.xlsx
+/Pseudonymization_process/Pseudo_Leaderboard.xlsx
