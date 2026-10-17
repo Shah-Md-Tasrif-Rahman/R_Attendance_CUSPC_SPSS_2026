@@ -273,9 +273,18 @@ comparison_table <- colformat_double(
   digits = 3
 )
 
+comparison_table <- bg(
+  comparison_table,
+  bg = "white",
+  part = "all"
+)
+
 save_as_image(
   comparison_table,
-  path = r"(E:\Statistical Softwares\R\RStudio\Projects\R_Attendance_CUSPC_SPSS_2026\Graphs_and_tables\Images\model_comparison.png)"
+  path = r"(E:\Statistical Softwares\R\RStudio\Projects\R_Attendance_CUSPC_SPSS_2026\Graphs_and_tables\Images\model_comparison.png)",
+  expand = 0,
+  zoom = 2,
+  overwrite = TRUE
 )
 
 # Parameters among models ----
@@ -522,7 +531,7 @@ qqnorm(daily_summary$Participants)
 qqline(daily_summary$Participants)
 shapiro.test(daily_summary$Participants)
 
-# Model comparison 2: Electric Boogaloo ----
+# Model comparison 2: Electric Boogaloo
 
 library(broom)
 glance(model_linear)
@@ -570,7 +579,422 @@ ggplot(res_vs_fit_asymptotic, aes(x = Fitted, y = Residuals)) +
   labs(title = "Residuals vs Fitted in Asymptotic Model", x = "Fitted Values", y = "Residuals") +
   theme(plot.title = element_text(hjust = 0.5))
 
-# Testing ANOVA between the exponential and asymptotic model ----
+# ANOVA between nested models
 
 anova(model_exponential, model_asymptotic)
+
+# Adding the session variable as explanatory/independent variable instead of t to make similar models again, doing this to validate similarly like Evans et. al. ----
+
+# Model D: Linear Regression ----
+
+daily_summary_session_number_fixed <- read.xlsx(r"(E:\Statistical Softwares\R\RStudio\Projects\R_Attendance_CUSPC_SPSS_2026\Pseudonymization_process\Public_datasets\Daily_attendance_summary_session_number_fixed.xlsx)")
+
+model_linear_snf <- lm(
+  Participants ~ Session_Number,
+  data = daily_summary_session_number_fixed
+)
+
+# Create smooth linear fitted line
+
+linear_curve_snf <- data.frame(
+  Session_Number = seq(
+    min(daily_summary_session_number_fixed$Session_Number),
+    max(daily_summary_session_number_fixed$Session_Number),
+    length.out = 100
+  )
+)
+
+linear_curve_snf$Participants <- predict(
+  model_linear_snf,
+  newdata = linear_curve_snf
+)
+
+# Model E: Exponential Decay ----
+
+model_exponential_snf <- nls(
+  Participants ~ a * exp(b * Session_Number),
+  data = daily_summary_session_number_fixed,
+  start = list(
+    a = max(daily_summary_session_number_fixed$Participants),
+    b = -0.05
+  )
+)
+
+# Model F: Asymptotic Exponential ----
+
+model_asymptotic_snf <- nls(
+  Participants ~ c + a * exp(b * Session_Number),
+  data = daily_summary_session_number_fixed,
+  start = list(
+    c = 25,
+    # c = 25; since this is the mean of the last four somewhat similar attendance values
+    a = 49,
+    # a is just N(1)=74=c+a
+    b = -0.05
+  )
+)
+
+# Comparison table ----
+
+model_list_snf <- list( "Linear" = model_linear_snf, "Exponential Decay" = model_exponential_snf, "Asymptotic Exponential" = model_asymptotic_snf ) 
+
+# Putting pseudo R square in the model
+
+pseudo_r2 <- function(model, y){
+  rss <- sum(residuals(model)^2)
+  tss <- sum((y - mean(y))^2)
+  1 - rss/tss
+}
+
+# Fit statistics
+gof_custom <- tibble(
+  term = c(
+    "Observation Number",
+    "R²",
+    "Adj. R²",
+    "AIC",
+    "BIC",
+    "RMSE"
+  ),
+  Linear = c(
+    nobs(model_linear_snf),
+    summary(model_linear_snf)$r.squared,
+    summary(model_linear_snf)$adj.r.squared,
+    AIC(model_linear_snf),
+    BIC(model_linear_snf),
+    sqrt(mean(residuals(model_linear_snf)^2))
+  ),
+  `Exponential Decay` = c(
+    nobs(model_exponential_snf),
+    pseudo_r2(model_exponential_snf, daily_summary_session_number_fixed$Participants),
+    NA,
+    AIC(model_exponential_snf),
+    BIC(model_exponential_snf),
+    sqrt(mean(residuals(model_exponential_snf)^2))
+  ),
+  `Asymptotic Exponential` = c(
+    nobs(model_asymptotic_snf),
+    pseudo_r2(model_asymptotic_snf, daily_summary_session_number_fixed$Participants),
+    NA,
+    AIC(model_asymptotic_snf),
+    BIC(model_asymptotic_snf),
+    sqrt(mean(residuals(model_asymptotic_snf)^2))
+  )
+)
+
+comparison_table_snf <- modelsummary(
+  model_list_snf,
+  output = "flextable",
+  statistic = NULL,
+  gof_omit = ".*",
+  add_rows = gof_custom
+)
+
+comparison_table_snf <- colformat_double(
+  comparison_table_snf,
+  digits = 3
+)
+
+comparison_table_snf <- bg(
+  comparison_table_snf,
+  bg = "white",
+  part = "all"
+)
+
+save_as_image(
+  comparison_table_snf,
+  path = r"(E:\Statistical Softwares\R\RStudio\Projects\R_Attendance_CUSPC_SPSS_2026\Graphs_and_tables\Images\model_comparison_snf.png)",
+  expand = 0,
+  zoom = 2,
+  overwrite = TRUE
+)
+
+# Parameters among models ----
+
+model_parameters(model_linear_snf)
+model_parameters(model_exponential_snf)
+model_parameters(model_asymptotic_snf)
+# 8th plot: Linear fit ----
+
+ggplot(
+  daily_summary_session_number_fixed,
+  aes(x = Session_Number, y = Participants)
+) +
+  
+  # Actual attendance
+  geom_line() +
+  geom_point(size = 2.2) +
+  
+  # Linear fitted line
+  geom_line(
+    data = linear_curve_snf,
+    aes(x = Session_Number, y = Participants),
+    linetype = "dotted",
+    linewidth = 1,
+    color = "steelblue3"
+  ) +
+  
+  scale_x_continuous(
+    limits = c(1, max(daily_summary_session_number_fixed$Session_Number)),
+    breaks = seq(1, max(daily_summary_session_number_fixed$Session_Number), by = 1),
+    expand = expansion(mult = c(0.0015, 0.02))
+  ) +
+  
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, by = 10),
+    expand = c(0, 0)
+  ) +
+  
+  labs(
+    title = "Attendance Across Classes With Linear Model Fitted",
+    x = "Session Number",
+    y = "Number of Participants"
+  ) +
+  
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )
+
+# 9th plot: Exponential Decay fit ----
+
+# Create smooth exponential fitted line
+exp_curve_snf <- data.frame(
+  Session_Number = seq(
+    min(daily_summary_session_number_fixed$Session_Number),
+    max(daily_summary_session_number_fixed$Session_Number),
+    length.out = 100
+  )
+)
+
+# Predicted participants
+exp_curve_snf$Participants <- predict(
+  model_exponential_snf,
+  newdata = exp_curve_snf
+)
+
+ggplot(
+  daily_summary_session_number_fixed,
+  aes(x = Session_Number, y = Participants)
+) +
+  
+  # Actual attendance
+  geom_line() +
+  geom_point(size = 2.2) +
+  
+  # Exponential fitted line
+  geom_line(
+    data = exp_curve_snf,
+    aes(x = Session_Number, y = Participants),
+    linetype = "dotted",
+    linewidth = 1,
+    color = "forestgreen"
+  ) +
+  
+  scale_x_continuous(
+    limits = c(1, max(daily_summary_session_number_fixed$Session_Number)),
+    breaks = seq(1, max(daily_summary_session_number_fixed$Session_Number), by = 1),
+    expand = expansion(mult = c(0.0015, 0.02))
+  ) +
+  
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, by = 10),
+    expand = c(0, 0)
+  ) +
+  
+  labs(
+    title = "Attendance Across Classes With Exponential Decay Model Fitted",
+    x = "Session Number",
+    y = "Number of Participants"
+  ) +
+  
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )
+
+# 10th plot: Asymptotic Exponential fit ----
+
+# Create smooth asymptotic fitted line
+asym_curve_snf <- data.frame(
+  Session_Number = seq(
+    min(daily_summary_session_number_fixed$Session_Number),
+    max(daily_summary_session_number_fixed$Session_Number),
+    length.out = 100
+  )
+)
+
+# Predicted participants
+asym_curve_snf$Participants <- predict(
+  model_asymptotic_snf,
+  newdata = asym_curve_snf
+)
+
+ggplot(
+  daily_summary_session_number_fixed,
+  aes(x = Session_Number, y = Participants)
+) +
+  
+  # Actual attendance
+  geom_line() +
+  geom_point(size = 2.2) +
+  
+  # Asymptotic exponential fitted line
+  geom_line(
+    data = asym_curve_snf,
+    aes(x = Session_Number, y = Participants),
+    linetype = "dotted",
+    linewidth = 1,
+    color = "firebrick3"
+  ) +
+  
+  scale_x_continuous(
+    limits = c(1, max(daily_summary_session_number_fixed$Session_Number)),
+    breaks = seq(1, max(daily_summary_session_number_fixed$Session_Number), by = 1),
+    expand = expansion(mult = c(0.0015, 0.02))
+  ) +
+  
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, by = 10),
+    expand = c(0, 0)
+  ) +
+  
+  labs(
+    title = "Attendance Across Classes With Asymptotic Exponential Model Fitted",
+    x = "Session Number",
+    y = "Number of Participants"
+  ) +
+  
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )
+
+# 11th plot: Model comparison ----
+
+ggplot(
+  daily_summary_session_number_fixed,
+  aes(x = Session_Number, y = Participants)
+) +
+  
+  # Actual attendance
+  geom_line(
+    color = "grey27",
+    linewidth = .8
+  ) +
+  
+  geom_point(
+    color = "black",
+    size = 2.2
+  ) +
+  
+  # Linear fit
+  geom_line(
+    data = linear_curve_snf,
+    aes(x = Session_Number, y = Participants,
+        color = "Linear"),
+    linewidth = 1.1
+  ) +
+  
+  # Exponential fit
+  geom_line(
+    data = exp_curve_snf,
+    aes(x = Session_Number, y = Participants,
+        color = "Exponential"),
+    linewidth = 1.1
+  ) +
+  
+  # Asymptotic exponential fit
+  geom_line(
+    data = asym_curve_snf,
+    aes(x = Session_Number, y = Participants,
+        color = "Asymptotic Exponential"),
+    linewidth = 1.1
+  ) +
+  
+  scale_color_manual(
+    name = "Model",
+    values = c(
+      "Linear" = "steelblue3",
+      "Exponential" = "forestgreen",
+      "Asymptotic Exponential" = "firebrick3"
+    )
+  ) +
+  
+  scale_x_continuous(
+    limits = c(1, max(daily_summary_session_number_fixed$Session_Number)),
+    breaks = seq(1, max(daily_summary_session_number_fixed$Session_Number), by = 1),
+    expand = expansion(mult = c(0.0015, 0.02))
+  ) +
+  
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, by = 10),
+    expand = c(0, 0)
+  ) +
+  
+  labs(
+    title = "Attendance Decline Over Time: Model Comparison",
+    x = "Session Number",
+    y = "Number of Participants"
+  ) +
+  
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "bottom"
+  )
+
+# Other plots and tests ----
+
+# Model comparison 2: Electric Boogaloo pt. 2
+
+library(broom)
+glance(model_linear_snf)
+glance(model_exponential_snf)
+glance(model_asymptotic_snf)
+
+# Plotting residuals vs fitted values
+
+# Linear
+
+res_vs_fit_linear_snf <- data.frame(
+  Fitted = fitted(model_linear_snf),
+  Residuals = residuals(model_linear_snf)
+)
+
+ggplot(res_vs_fit_linear_snf, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "steelblue3", linetype = "dashed") +
+  labs(title = "Residuals vs Fitted in Linear Model (Session Number Used)", x = "Fitted Values", y = "Residuals") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# Exponential decay
+
+res_vs_fit_exponential_snf <- data.frame(
+  Fitted = fitted(model_exponential_snf),
+  Residuals = residuals(model_exponential_snf)
+)
+
+ggplot(res_vs_fit_exponential_snf, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "forestgreen", linetype = "dashed") +
+  labs(title = "Residuals vs Fitted in Exponential Decay Model (Session Number Used)", x = "Fitted Values", y = "Residuals") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# Asymptotic
+
+res_vs_fit_asymptotic_snf <- data.frame(
+  Fitted = fitted(model_asymptotic_snf),
+  Residuals = residuals(model_asymptotic_snf)
+)
+
+ggplot(res_vs_fit_asymptotic_snf, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "firebrick3", linetype = "dashed") +
+  labs(title = "Residuals vs Fitted in Asymptotic Model", x = "Fitted Values", y = "Residuals") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# ANOVA between nested models
+
+anova(model_exponential_snf, model_asymptotic_snf)
 ```
