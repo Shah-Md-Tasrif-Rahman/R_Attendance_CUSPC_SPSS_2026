@@ -272,7 +272,7 @@ Let's consider the following regression models:
 
 ```math
 \begin{aligned}
-\text{Linear model (Baseline model):}\qquad
+\text{Linear model (Baseline model):}\quad
 & y_i = z + tx_i + \varepsilon_i \\
 
 \text{Exponential decay model:} \quad
