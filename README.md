@@ -99,7 +99,7 @@ Let's see some descriptive statistics for the attendance duration of participant
 | **Shapiro-Wilk *W*** | 0.916 |
 | **Shapiro-Wilk *p*** | < .001 |
 
-*Note*. SD = standard deviation, SE = standard error, IQR = interquartile range.
+*Note*. SD = standard deviation, SE = standard error, IQR = interquartile range. All the values are as minutes of attendance.
 
 From Shapiro-Wilk test, we have enough evidence to `reject normality for attendance duration distribution`. 
 
@@ -271,6 +271,27 @@ Up until now, Jamovi was used in the analysis. Now we'll use R to fit these new 
 Let's consider the following regression models:
 
 ```math
-Linear model, y=z+tx \\
-Exponential decay model, 
+\begin{aligned}
+\text{Linear model (We've already been using this one):}
+& y_i = z + tx_i + \varepsilon_i \\
+
+\text{Exponential decay model:} \quad
+& y_i = ae^{bx_i} + \varepsilon_i,\; b<0 \\
+
+\text{Asymptotic exponential model:} \quad
+& y_i = c + ae^{bx_i} + \varepsilon_i,\; b<0
+\end{aligned}
+```
+Where,
+```math
+\begin{aligned}
+y_i &= \text{Number of participants (Target variable)} \\
+x_i &= \text{Days since first session (Explanatory variable)} \\
+z &= \text{Intercept of the linear model} \\
+t &= \text{Linear rate of change} \\
+a &= \text{Initial amplitude} \\
+b &= \text{Exponential decay rate} \\
+c &= \text{Asymptotic participant count} \\
+\varepsilon_i &= \text{Residual error}
+\end{aligned}
 ```

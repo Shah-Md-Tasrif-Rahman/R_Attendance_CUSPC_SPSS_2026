@@ -991,7 +991,7 @@ res_vs_fit_asymptotic_snf <- data.frame(
 ggplot(res_vs_fit_asymptotic_snf, aes(x = Fitted, y = Residuals)) +
   geom_point() +
   geom_hline(yintercept = 0, color = "firebrick3", linetype = "dashed") +
-  labs(title = "Residuals vs Fitted in Asymptotic Model", x = "Fitted Values", y = "Residuals") +
+  labs(title = "Residuals vs Fitted in Asymptotic Model (Session Number Used)", x = "Fitted Values", y = "Residuals") +
   theme(plot.title = element_text(hjust = 0.5))
 
 # ANOVA between nested models
