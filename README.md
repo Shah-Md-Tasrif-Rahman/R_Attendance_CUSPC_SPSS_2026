@@ -268,6 +268,8 @@ This means it's better that we use an **exponential decay regression model** and
 
 Up until now, Jamovi was used in the analysis. Now we'll use R to fit these new models using **Nonlinear Least Squares** method or `nls()`.
 
+### Regression Model Fitting
+
 Let's consider the following regression models:
 
 ```math
@@ -295,3 +297,26 @@ c &= \text{Asymptotic participant count} \\
 \varepsilon_i &= \text{Residual error}
 \end{aligned}
 ```
+#### Model Parameters
+| Parameter | Linear | Exponential Decay | Asymptotic Exponential |
+|:----------:|:----------:|:----------:|:----------:|
+| z | 61.091 |  |  |
+| t | -1.104 |  |  |
+| a |  | 68.282 | 52.695 |
+| b |  | -0.034 | -0.097 |
+| c |  |  | 23.199 |
+
+*Note*. All coefficients are statistically significant with *p* < .001. Check the Quarto output for more information
+
+#### Model Performance
+| Metric | Linear | Exponential Decay | Asymptotic Exponential |
+|:-------:|:-------:|:-------:|:-------:|
+| Observations (n) | 10 | 10 | 10 |
+| Residual df | 8 | 8 | 7 |
+| R² | 0.781 | 0.896 | 0.978 |
+| Adj. R² | 0.753 |  |  |
+| AIC | 76.037 | 68.564 | 54.944 |
+| BIC | 76.945 | 69.472 | 56.154 |
+| RMSE | 8.028 | 5.525 | 2.530 |
+
+*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error.
