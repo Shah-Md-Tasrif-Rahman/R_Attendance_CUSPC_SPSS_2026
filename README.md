@@ -306,7 +306,7 @@ c &= \text{Asymptotic participant count} \\
 | b |  | -0.034 | -0.097 |
 | c |  |  | 23.199 |
 
-*Note*. All coefficients are statistically significant with *p* < .001. Check the Quarto output for more information.
+*Note*. All coefficients are statistically significant with *p* < .001. Check the [Quarto output](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Graphs_and_tables/Quarto/Graphs_and_tables_output.html) for more information.
 
 #### Model Performance
 | Metric | Linear | Exponential Decay | Asymptotic Exponential |
