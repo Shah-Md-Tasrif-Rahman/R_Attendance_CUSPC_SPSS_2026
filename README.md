@@ -1,4 +1,4 @@
-# Online Class Attendance Analyses (This isn't hitting the spot, need a new top header which is more relevant)
+# Statistical Analysis of an Online Course Attendance
 
 [![Hits](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026.svg)](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/)
 
@@ -6,7 +6,7 @@
 
 This repository contains statistical analyses of the attendance dataset of an SPSS course hosted by [Programming Club, Dept. of Statistics, CU](https://www.linkedin.com/company/programmingclub-stat-cu/), and conducted by [Md Ahsanul Islam (Himel)](https://www.linkedin.com/in/mdahsanulhimel/).
 
-The main purpose of this project is to analyze participant behaviour in an online course over multiple sessions and to create regression models which can fit or explain such behaviour similarly for any other online courses of similar nature.
+This project examines participant attendance patterns across multiple sessions and compares regression models for describing attendance trajectories in this course and potentially similar courses.
 
 Main tools used for this project are: **R, renv, Jamovi, and Quarto.**
 
@@ -16,7 +16,7 @@ Main tools used for this project are: **R, renv, Jamovi, and Quarto.**
 
 ### Original Data
 
-The original data for this project was collected using an extension in Google Meet to generate detailed meeting reports in CSV format. The course had a total of 12 sessions, which were held from 14/7/2026 to 25/8/2026. Due to technical errors, the data for session 7 and 11 were missing, which leaves us with data of only 10 sessions.
+The original data for this project was collected using an extension in Google Meet to generate detailed meeting reports in CSV format. The course had a total of 12 sessions, which were held from 14/7/2026 to 25/8/2026. Due to technical errors, attendance records for sessions 7 and 11 were missing, leaving 10 observed sessions out of 12.
 
 Key variables in the original dataset were:
 - Participant Name
@@ -27,11 +27,11 @@ Key variables in the original dataset were:
 
 ### Data Preparation
 
-The CSV files for the 10 sessions were extracted and combined, and then attendance duration was calculated as new numeric variable. Variables concerned with the date was also included. This generated a Master_dataset, which was used for further processing. A leaderboard, daily attendance summary, weekday summary, and paired weekdays data was created.
+The CSV files for the 10 sessions were extracted and combined, and then attendance duration was calculated as a new numeric variable. Date-related variables were also included. This produced a master dataset for subsequent processing. A leaderboard, daily attendance summary, weekday summary, and paired weekdays data was created.
 
 ### Privacy & Pseudonymization
 
-The original dataset had the real names of participants, sharing them on the internet would be a privacy breach. To make the dataset publicly available, the names were pseudonymized, and new datasets were created using those pseudonyms. The pseudonymized datasets were then used for furthur statistical processing.
+The original dataset contained participants' real names, which would compromise their privacy if published. To make the dataset publicly available, the names were pseudonymized, and new datasets were created using those pseudonyms. The pseudonymized datasets were then used for furthur statistical analysis.
 
 The repository is designed so the analytical/visualization portion doesn't require the original dataset with PII.
 
@@ -43,7 +43,7 @@ The repository is designed so the analytical/visualization portion doesn't requi
 
 1. How is the attendance duration of participants distributed?
 
-2. Is there a difference between the average attendance time at Fridays and Tuesdays?
+2. Is there a difference in participants' mean attendance duration between Tuesdays and Fridays?
 
 3. Which regression model explains the participant attendance pattern best?
 
@@ -103,7 +103,7 @@ Let's see some descriptive statistics for the attendance duration of participant
 
 *Note*. SD = standard deviation, SE = standard error, IQR = interquartile range. All the values are as minutes of attendance.
 
-From Shapiro-Wilk test, we have enough evidence to `reject normality for attendance duration distribution`. 
+The Shapiro–Wilk test provides `evidence against normality of the attendance-duration distribution`.
 
 #### Q-Q plot
 ![Attendance_duration_QQ_plot](./Jamovi_files/Reports/Images/Attendance_duration_QQ_plot.png)
@@ -111,13 +111,13 @@ From Shapiro-Wilk test, we have enough evidence to `reject normality for attenda
 #### Attendance duration histogram
 ![Attendance_duration_distribution](./Graphs_and_tables/Images/Attendance_duration_distribution.png)
 
-From these visualizations, we can see that the distribution of attendance duration of participants in this course is `negatively skewed and platykurtic`. This means that `most of the students who stay in the session stay for longer than average, and the peak attendance is flatter than if it was normally distributed`.
+From these visualizations, we can see that the distribution of attendance duration of participants in this course is `negatively skewed and platykurtic`.
 
 ## 2nd Research Question
 
 In this course, sessions were held at either Tuesday or Friday. Since this was an online course, participants were expected to stay longer in sessions at Friday (which counts as a weekend in this context). This course was mostly attended by university-level students. To test whether there's a difference between the average attendance duration of participants at Tuesday or Friday, a **paired-samples measure** was decided to be used.
 
-Firstly, let's check the normality to decide what test we should use.
+First, we assess the distribution of the paired differences to decide which test we should use.
 
 #### Normality Tests
 
@@ -127,7 +127,7 @@ Firstly, let's check the normality to decide what test we should use.
 | Kolmogorov-Smirnov | 0.131 | .217 |
 | Anderson-Darling | 1.29 | .002 |
 
-Since we have enough evidence to reject normality for this dataset from Shapiro-Wilk and Anderson-Darling test, we'll use **Wilcoxon signed-rank test**.
+The paired differences were assessed for normality. Given the observed distribution and the test assumptions, we'll use the **Wilcoxon signed-rank test**.
 
 #### Descriptives
 
@@ -138,7 +138,7 @@ Since we have enough evidence to reject normality for this dataset from Shapiro-
 
 *Note*. SD = standard deviation, SE = standard error.
 
-For this dataset, Wilcoxon signed-rank test showed a `non-significant difference between the median attendance duration of participants at Tuesday or Friday`, *W* = 747, *p* = .108.
+The Wilcoxon signed-rank test `didn't provide sufficient evidence of a difference between Tuesday and Friday attendance durations`, *W* = 747, *p* = .108.
 
 ![Tuesday_vs_Friday](./Graphs_and_tables/Images/Tuesday_vs_Friday.png)
 
@@ -150,7 +150,7 @@ Let's look at how the participant attendance number is distributed first.
 
 ![Attendance_across_sessions](./Graphs_and_tables/Images/Attendance_across_sessions.png)
 
-This visualization looks closer to a linear regression model or exponential decay regression model. Let's fit a linear regression model first.
+The observed trajectory suggests that linear and exponential decay models are reasonable candidate forms to investigate. Let's fit a linear regression model first.
 
 #### Normality Tests
 
@@ -207,7 +207,7 @@ This visualization looks closer to a linear regression model or exponential deca
 #### Residual vs. Fitted Plot
 ![Linear_model_residual_vs_fitted_plot](./Jamovi_files/Reports/Images/Linear_model_residual_vs_fitted_plot.png)
 
-As we can see, the fitted linear regression model has a few issues. Mainly, it suffers from autocorrelation, and the Q-Q plot and Residual vs. Fitted plot shows poor fitting issues. To alleviate these, we'll log-transform this model for a better overall fit.
+As we can see, the linear model shows evidence of positive residual autocorrelation and potential lack of fit in the diagnostic plots. We'll next examine a log-linear model to assess whether the transformation provides a more appropriate representation of the attendance trend.
 
 #### Normality Tests
 
@@ -264,11 +264,11 @@ As we can see, the fitted linear regression model has a few issues. Mainly, it s
 #### Residual vs. Fitted Plot
 ![Log_model_residual_vs_fitted_plot](./Jamovi_files/Reports/Images/Log_model_residual_vs_fitted_plot.png)
 
-Here we can see that, the log-transformed model doesn't suffer from the autocorrelation issue, but the Q-Q plot and Residual vs. Fitted plot still shows poor fitting issues.
+The log-linear model shows less evidence of residual autocorrelation (Durbin–Watson *p* = .070), although the small sample size limits the test's power. The residual plots also indicate that potential lack of fit remains.
 
-This means it's better that we use an **exponential decay regression model** and an **asymptotic exponential decay regression model** to furthur fit this dataset.
+We therefore examine **exponential decay and asymptotic exponential decay models** as alternative specifications.
 
-Up until now, Jamovi was used in the analysis. Now we'll use R to fit these new models using **Nonlinear Least Squares** method or `nls()`.
+The preceding analyses were conducted in Jamovi. We then use R's nonlinear least squares function, `nls()`, to fit the alternative models.
 
 ### Regression Model Fitting
 
@@ -293,12 +293,15 @@ y_i &= \text{Number of participants (Target variable)} \\
 x_i &= \text{Days since first session (Explanatory variable)} \\
 z &= \text{Intercept of the linear model} \\
 t &= \text{Linear rate of change} \\
-a &= \text{Initial amplitude} \\
+a &= \text{Amplitude of the exponential component} \\
 b &= \text{Exponential decay rate} \\
-c &= \text{Asymptotic participant count} \\
+c &= \text{Limiting predicted participant count as } x\to\infty \\
 \varepsilon_i &= \text{Residual error}
 \end{aligned}
 ```
+
+***Note*. For the asymptotic model, the predicted response at x = 0 is c + a. The interpretation of this reference point depends on how x is coded.**
+
 #### Model Parameters
 | Parameter | Linear | Exponential Decay | Asymptotic Exponential |
 |:----------:|:----------:|:----------:|:----------:|
@@ -324,7 +327,7 @@ c &= \text{Asymptotic participant count} \\
 | ΔBIC | - | 7.473 | 20.791 |
 | ΔRMSE | - | 2.503 | 5.498 |
 
-*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE is calculated compared to the linear model; larger positive values indicate greater improvement.
+*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE are calculated as the corresponding linear-model metric minus the alternative-model metric. Positive values favour the alternative model under these comparison conventions.
 
 #### ANOVA
 
@@ -333,8 +336,7 @@ c &= \text{Asymptotic participant count} \\
 | Exponential Decay | 8 | 305.237 | - | - | - | - |
 | Asymptotic Exponential | 7 | 64.013 | 1 | 241.22 | 26.379 | .001345 |
 
-*Note.* The asymptotic exponential model fit the data significantly better than the exponential decay model, *F*(1, 7) = 26.379, *p* = .001345. This result supports the inclusion of the asymptotic parameter (*c*) in the model.
-
+*Note*. The nested-model comparison favoured the asymptotic exponential model, *F*(1, 7) = 26.379, *p* = .001345. But given the small sample size, this evidence should be interpreted cautiously.
 
 #### Model plotting
 ![All_models_fit](./Graphs_and_tables/Images/All_models_fit.png)
@@ -369,9 +371,9 @@ y_i &= \text{Number of participants (Target variable)} \\
 \alpha_i &= \text{Session number (Explanatory variable)} \\
 z &= \text{Intercept of the linear model} \\
 t &= \text{Linear rate of change} \\
-a &= \text{Initial amplitude} \\
+a &= \text{Amplitude of the exponential component} \\
 b &= \text{Exponential decay rate} \\
-c &= \text{Asymptotic participant count} \\
+c &= \text{Limiting predicted participant count as } \alpha\to\infty \\
 \varepsilon_i &= \text{Residual error}
 \end{aligned}
 ```
@@ -401,7 +403,7 @@ c &= \text{Asymptotic participant count} \\
 | ΔBIC | - | 8.607 | 18.405 |
 | ΔRMSE | - | 2.819 | 5.199 |
 
-*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE is calculated compared to the linear model; larger positive values indicate greater improvement.
+*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE are calculated as the corresponding linear-model metric minus the alternative-model metric. Positive values favour the alternative model under these comparison conventions.
 
 #### ANOVA
 
@@ -410,8 +412,7 @@ c &= \text{Asymptotic participant count} \\
 | Exponential Decay | 8 | 274.784 | - | - | - | - |
 | Asymptotic Exponential | 7 | 81.935 | 1 | 192.85 | 16.476 | .004815 |
 
-*Note.* The asymptotic exponential model fit the data significantly better than the exponential decay model, *F*(1, 7) = 16.476, *p* = .004815. This result supports the inclusion of the asymptotic parameter (*c*) in the model.
-
+*Note*. The nested-model comparison favoured the asymptotic exponential model, *F*(1, 7) = 16.476, *p* = .004815. But given the small sample size, this evidence should be interpreted cautiously.
 
 #### Model plotting
 ![All_models_snf_fit](./Graphs_and_tables/Images/All_models_snf_fit.png)
@@ -421,11 +422,13 @@ c &= \text{Asymptotic participant count} \\
 ![Residual_vs_fitted_exponential_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_exponential_snf_model.png)
 ![Residual_vs_fitted_asymptotic_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_asymptotic_snf_model.png)
 
-As we can see, **for both sets of regression models, the asymptotic exponential models fit the best for the data at hand**. This specific type of model provided the strongest empirical representation of the observed attendance trajectory. It perfectly captured **the rapid early decline in the beginning, then the decline became progessively smaller and approached a non-zero asymptote (with finite number of sessions/time after first session)**. The asymptote represents **a theoretical persistent-attendance level**. This structure is consistent with **a plausible attendance mechanism in which an initially large participant pool gradually contracts toward a smaller persistent group**.
+As we can see, **for both sets of regression models, the asymptotic exponential models provided the best in-sample fit**. Among the candidate models considered, this model provided the strongest in-sample fit to the observed attendance trajectory.
+
+It captured **a rapid initial decline followed by progressively smaller decreases, approaching a non-zero asymptote as the explanatory variable increases**. The asymptote represents **a theoretical persistent-attendance level**. This pattern is consistent with **a possible mechanism in which attendance declines toward a smaller long-run level, although the fitted curve alone can't establish that mechanism**.
 
 Since this dataset contains only 10 sessions and represents a single attendance sequence, this interpretation should be treated as a testable hypothesis rather than evidence of a universal attendance law.
 
-**The reason for there being two sets of regression models is because the dataset didn't have sequential data of sessions (data for session 7 and 11 were missing). So the initial plan was to just use a set of regression model using days since first session as explanatory variable. But to be congruent with the literature about this topic, another set of regression model using session number as explanatory variable was needed. In my opinion, the set of regression model using days since first session as explanatory variable is better since it can also handle datasets with missing data (like the current dataset at hand), and both the sets of regression models don't have too much difference in their outputs of parameters. But still, the choice of explanatory variable is entirely dependant on data quality and the specific context of the dataset being worked on.**
+**Two sets of models were fitted because attendance records for sessions 7 and 11 were missing, leaving 10 observed sessions out of 12. So the initial plan was to just use a set of regression model using days since first session as explanatory variable. But to be congruent with the literature about this topic, another set of regression model using session number as explanatory variable was needed. Calendar time preserves the actual elapsed intervals between observed sessions, whereas session number represents course progression. The choice of explanatory variable is entirely dependant on data quality and the specific context of the dataset being worked on.**
 
 ## Literature Review
 
