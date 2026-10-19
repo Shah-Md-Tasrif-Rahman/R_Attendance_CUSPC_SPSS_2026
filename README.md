@@ -302,11 +302,11 @@ c &= \text{Asymptotic participant count} \\
 #### Model Parameters
 | Parameter | Linear | Exponential Decay | Asymptotic Exponential |
 |:----------:|:----------:|:----------:|:----------:|
-| z | 61.091 |  |  |
-| t | -1.104 |  |  |
-| a |  | 68.282 | 52.695 |
-| b |  | -0.034 | -0.097 |
-| c |  |  | 23.199 |
+| z | 61.091 | - | - |
+| t | -1.104 | - | - |
+| a | - | 68.282 | 52.695 |
+| b | - | -0.034 | -0.097 |
+| c | - | - | 23.199 |
 
 *Note*. All coefficients are statistically significant with *p* < .001. Check the [Quarto output](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Graphs_and_tables/Quarto/Graphs_and_tables_output.html) for more information.
 
@@ -316,12 +316,25 @@ c &= \text{Asymptotic participant count} \\
 | Observations (n) | 10 | 10 | 10 |
 | Residual df | 8 | 8 | 7 |
 | R² | 0.781 | 0.896 | 0.978 |
-| Adj. R² | 0.753 |  |  |
+| Adj. R² | 0.753 | - | - |
 | AIC | 76.037 | 68.564 | 54.944 |
 | BIC | 76.945 | 69.472 | 56.154 |
 | RMSE | 8.028 | 5.525 | 2.530 |
+| ΔAIC | - | 7.473 | 21.093 |
+| ΔBIC | - | 7.473 | 20.791 |
+| ΔRMSE | - | 2.503 | 5.498 |
 
-*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error.
+*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE is calculated compared to the linear model; larger positive values indicate greater improvement.
+
+#### ANOVA
+
+| Model | Residual df | Residual SS | Δdf | ΔSS | *F* | *p* |
+|:------|:--:|:--:|:--:|:--:|:--:|:--:|
+| Exponential Decay | 8 | 305.237 | - | - | - | - |
+| Asymptotic Exponential | 7 | 64.013 | 1 | 241.22 | 26.379 | .001345 |
+
+*Note.* The asymptotic exponential model fit the data significantly better than the exponential decay model, *F*(1, 7) = 26.379, *p* = .001345. This result supports the inclusion of the asymptotic parameter (*c*) in the model.
+
 
 #### Model plotting
 ![All_models_fit](./Graphs_and_tables/Images/All_models_fit.png)
@@ -330,3 +343,90 @@ c &= \text{Asymptotic participant count} \\
 ![Residual_vs_fitted_linear_model](./Graphs_and_tables/Images/Residual_vs_fitted_linear_model.png)
 ![Residual_vs_fitted_exponential_model](./Graphs_and_tables/Images/Residual_vs_fitted_exponential_model.png)
 ![Residual_vs_fitted_asymptotic_model](./Graphs_and_tables/Images/Residual_vs_fitted_asymptotic_model.png)
+
+Let's consider another set of regression models, but instead of using **days since first session**; let's use **session number**.
+
+### Regression Model Fitting (Using Session Number)
+
+Let's consider the following regression models:
+
+```math
+\begin{aligned}
+\text{Linear model (Baseline model):}\quad
+& y_i = z + t\alpha_i + \varepsilon_i \\
+
+\text{Exponential decay model:} \quad
+& y_i = ae^{b\alpha_i} + \varepsilon_i,\; b<0 \\
+
+\text{Asymptotic exponential model:} \quad
+& y_i = c + ae^{b\alpha_i} + \varepsilon_i,\; b<0
+\end{aligned}
+```
+Where,
+```math
+\begin{aligned}
+y_i &= \text{Number of participants (Target variable)} \\
+\alpha_i &= \text{Session number (Explanatory variable)} \\
+z &= \text{Intercept of the linear model} \\
+t &= \text{Linear rate of change} \\
+a &= \text{Initial amplitude} \\
+b &= \text{Exponential decay rate} \\
+c &= \text{Asymptotic participant count} \\
+\varepsilon_i &= \text{Residual error}
+\end{aligned}
+```
+
+#### Model Parameters
+| Parameter | Linear | Exponential Decay | Asymptotic Exponential |
+|:----------:|:----------:|:----------:|:----------:|
+| z | 66.200 | - | - |
+| t | -4.367 | - | - |
+| a | - | 80.323 | 75.984 |
+| b | - | -0.135 | -0.325 |
+| c | - | - | 21.602 |
+
+*Note*. All coefficients are statistically significant with *p* < .001. Check the [Quarto output](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Graphs_and_tables/Quarto/Graphs_and_tables_output.html) for more information.
+
+#### Model Performance
+| Metric | Linear | Exponential Decay | Asymptotic Exponential |
+|:-------:|:-------:|:-------:|:-------:|
+| Observations (n) | 10 | 10 | 10 |
+| Residual df | 8 | 8 | 7 |
+| R² | 0.779 | 0.906 | 0.972 |
+| Adj. R² | 0.751 | - | - |
+| AIC | 76.121 | 67.513 | 57.412 |
+| BIC | 77.028 | 68.421 | 58.623 |
+| RMSE | 8.061 | 5.242 | 2.862 |
+| ΔAIC | - | 8.608 | 18.709 |
+| ΔBIC | - | 8.607 | 18.405 |
+| ΔRMSE | - | 2.819 | 5.199 |
+
+*Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error. ΔAIC, ΔBIC, and ΔRMSE is calculated compared to the linear model; larger positive values indicate greater improvement.
+
+#### ANOVA
+
+| Model | Residual df | Residual SS | Δdf | ΔSS | *F* | *p* |
+|:------|:--:|:--:|:--:|:--:|:--:|:--:|
+| Exponential Decay | 8 | 274.784 | - | - | - | - |
+| Asymptotic Exponential | 7 | 81.935 | 1 | 192.85 | 16.476 | .004815 |
+
+*Note.* The asymptotic exponential model fit the data significantly better than the exponential decay model, *F*(1, 7) = 16.476, *p* = .004815. This result supports the inclusion of the asymptotic parameter (*c*) in the model.
+
+
+#### Model plotting
+![All_models_snf_fit](./Graphs_and_tables/Images/All_models_snf_fit.png)
+
+#### Residuals vs. Fitted Plots
+![Residual_vs_fitted_linear_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_linear_snf_model.png)
+![Residual_vs_fitted_exponential_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_exponential_snf_model.png)
+![Residual_vs_fitted_asymptotic_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_asymptotic_snf_model.png)
+
+As we can see, **for both sets of regression models, the asymptotic exponential models fit the best for the data at hand**. This specific type of model provided the strongest empirical representation of the observed attendance trajectory. It perfectly captured **the rapid early decline in the beginning, then the decline became progessively smaller and approached a non-zero asymptote (with finite number of sessions/time after first session)**. The asymptote represents **a theoretical persistent-attendance level**. This structure is consistent with **a plausible attendance mechanism in which an initially large participant pool gradually contracts toward a smaller persistent group**.
+
+Since this dataset contains only 10 sessions and represents a single attendance sequence, this interpretation should be treated as a testable hypothesis rather than evidence of a universal attendance law.
+
+**The reason for there being two sets of regression models is because the dataset didn't have sequential data of sessions (data for session 7 and 11 were missing). So the initial plan was to just use a set of regression model using days since first session as explanatory variable. But to be congruent with the literature about this topic, another set of regression model using session number as explanatory variable was needed. In my opinion, the set of regression model using days since first session as explanatory variable is better since it can also handle datasets with missing data (like the current dataset at hand), and both the sets of regression models don't have too much difference in their outputs of parameters. But still, the choice of explanatory variable is entirely dependant on data quality and the specific context of the dataset being worked on.**
+
+## Literature Review
+
+## Asymptotic Participation Proportion
