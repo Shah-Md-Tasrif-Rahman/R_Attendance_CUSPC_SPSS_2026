@@ -306,7 +306,7 @@ c &= \text{Asymptotic participant count} \\
 | b |  | -0.034 | -0.097 |
 | c |  |  | 23.199 |
 
-*Note*. All coefficients are statistically significant with *p* < .001. Check the Quarto output for more information
+*Note*. All coefficients are statistically significant with *p* < .001. Check the Quarto output for more information.
 
 #### Model Performance
 | Metric | Linear | Exponential Decay | Asymptotic Exponential |
@@ -320,3 +320,11 @@ c &= \text{Asymptotic participant count} \\
 | RMSE | 8.028 | 5.525 | 2.530 |
 
 *Note*. R² for the non-linear models was computed as 1 − RSS/TSS. AIC = Akaike Information Criterion, BIC = Bayesian Information Criterion, and RMSE = Root Mean Square Error.
+
+#### Model plotting
+![All_models_fit](./Graphs_and_tables/Images/All_models_fit.png)
+
+#### Residuals vs. Fitted Plots
+![Residual_vs_fitted_linear_model](./Graphs_and_tables/Images/Residual_vs_fitted_linear_model.png)
+![Residual_vs_fitted_exponential_model](./Graphs_and_tables/Images/Residual_vs_fitted_exponential_model.png)
+![Residual_vs_fitted_asymptotic_model](./Graphs_and_tables/Images/Residual_vs_fitted_asymptotic_model.png)
