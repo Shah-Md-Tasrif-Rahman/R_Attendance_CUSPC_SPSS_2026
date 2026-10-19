@@ -35,7 +35,9 @@ The original dataset had the real names of participants, sharing them on the int
 
 The repository is designed so the analytical/visualization portion doesn't require the original dataset with PII.
 
-[Check out the pseudonymized master_dataset here](./Pseudonymization_process/Public_datasets/pseudonymized_master_dataset_full_context.xlsx)
+**Check out the [pseudonymized master_dataset](./Pseudonymization_process/Public_datasets/pseudonymized_master_dataset_full_context.xlsx)**
+
+**Check out [all datasets](./Pseudonymization_process/Public_datasets/)**
 
 ## Research Questions
 
