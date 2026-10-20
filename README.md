@@ -432,4 +432,32 @@ Since this dataset contains only 10 sessions and represents a single attendance 
 
 ## Literature Review
 
+**Massive Open Online Course (MOOC)** is a completely new education method which appeared in 2012. MOOCs are great for life-long learning and educational resource sharing. Compared with traditional education, MOOCs suffer more severe dropout problem. For most courses, less than 13% of students could follow **(Chen & Zhang, 2017, p. 1)**.
+
+Although the SPSS course dataset analyzed in this project doesn't represent a MOOC, the course shares some structural similarities with MOOCs. The course had three assignments and a final project. Certificates were awarded separately based on participation and final project completion. Nonetheless, this dataset exhibited an attendance trajectory similar to those reported in studies of MOOCs.
+
+**Dai et al. (2025)** utilized a collection of MOOCs offered through Coursera by the University of Pennsylvania from 2015 to 2025, which includes over 200 courses and has been used by over 5.7 million individual users. According to **Dai et al. (2025)**, "The findings suggest that stopout in MOOCs generally follows an exponential decay pattern across graded assessments, but the disproportionately high stopout rate at the first graded assessment indicates that early disengagement follows a different underlying mechanism" **(p. 4)**.
+
+**Perna et al. (2014)** utilized data from the population of 16 first-generation MOOCs taught for the first time by University of Pennsylvania faculty in the 1st year of Penn-Coursera offerings. Courses were offered and completed between June 2012 and July 2013. For the 16 MOOCs in this study, there were 710,385 registrants and 541,576 starters. According to **Perna et al. (2014)**, "Despite these variations, and regardless of the course’s length, the patterns of decay were similar. Between the first and second modules, the decline in the share of registrants who accessed each subsequent lecture was steeper, as measured by both percentage point and percentage declines than between any two subsequent modules" **(p. 5)**.
+
+**De Freitas et al. (2015)** utilized data from an astronomy MOOC developed by John Morgan and colleagues at Curtin University using the Open2Study (OUA) platform. According to **De Freitas et al. (2015)**, "These data have been modelled as a fixed fraction of students dropping out after each course segment (ie, an exponential decay), with a differing dropout rate for each module (a quarter of a course) and for each cohort. This model suggests a relatively rapid dropout rate of approximately 5% per unit at the start of the course, which quickly stabilises to an almost negligible rate by the final module. These patterns point towards students making a fairly rapid decision that the course is or is not for them" **(p. 10)**.
+
+**Evans et al. (2016)** utilized a dataset of 44 Coursera MOOCs, comprising over 2.1 million student observations across more than 2,900 lectures. According to **Evans et al. (2016)**, "The pattern of lecture watching across courses is quite similar: high initial engagement that falls off rapidly and, in most instances, stabilizes at a low level. The rate of decline varies, but in all cases the greatest decline in participation occurs during the first ten lectures" **(p. 21)**.
+
+**Taken together, these studies document patterns of declining participation and subsequent stabilization in MOOCs. In this project, the asymptotic exponential regression model provided a substantially better fit than the linear and ordinary exponential regression models, yielding an estimated non-zero asymptote that represents the model-implied limiting attendance level. Building on this result, the project proposes an *Asymptotic Participation Proportion*, a model-derived measure expressing the estimated long-term attendance level relative to a specified participant reference population. This measure offers a model-based summary of the attendance trajectory, complementing conventional measures of course completion and individual persistence.**
+
 ## Asymptotic Participation Proportion
+
+## Repository Structure
+
+## References
+
+- Chen, Y., & Zhang, M. (2017). MOOC student dropout: Pattern and prevention. Proceedings of the ACM Turing 50th Celebration Conference - China, 1–6. https://doi.org/10.1145/3063955.3063959
+
+- Dai, Y., Vanacore, K., Baker, R., & Slater, S. (2025). Understanding MOOC Stopout Patterns: Course and Assessment-Level Insights. Proceedings of the Twelfth ACM Conference on Learning @ Scale, 300–304. https://doi.org/10.1145/3698205.3733944
+
+- De Freitas, S. I., Morgan, J., & Gibson, D. (2015). Will MOOCS transform learning and teaching in higher education? Engagement and course retention in online learning provision. British Journal of Educational Technology, 46(3), 455–471. https://doi.org/10.1111/bjet.12268
+
+- Evans, B. J., Baker, R. B., & Dee, T. S. (2016). Persistence Patterns in Massive Open Online Courses (MOOCs). The Journal of Higher Education, 87(2), 206–242. https://doi.org/10.1080/00221546.2016.11777400
+
+- Perna, L. W., Ruby, A., Boruch, R. F., Wang, N., Scull, J., Ahmad, S., & Evans, C. (2014). Moving Through MOOCs: Understanding the Progression of Users in Massive Open Online Courses. Educational Researcher, 43(9), 421–432. https://doi.org/10.3102/0013189X14562423
