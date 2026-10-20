@@ -448,11 +448,15 @@ Although the SPSS course dataset analyzed in this project doesn't represent a MO
 
 ## Asymptotic Participation Proportion
 
+If a fitted asymptotic exponential regression model is given by,
 ```math
 \begin{aligned}
-\text{If a fitted asymptotic exponential model is given by,}\\
-\hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; \hat{b}<0 \\
-\text{Then,}\\
+\hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; \hat{b}<0
+\end{aligned}
+```
+Then,
+```math
+\begin{aligned}
 \text{Asymptotic Participation Proportion,}\quad p_{D} = \frac{\hat{c}}{D}
 \end{aligned}
 ```
