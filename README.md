@@ -450,10 +450,10 @@ Although the SPSS course dataset analyzed in this project doesn't represent a MO
 
 ```math
 \begin{aligned}
-\centerline{If a fitted asymptotic exponential model is given by,}\quad\\
-\hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; b<0
-\centerline{Then,}\quad\\
-\centerline{Asymptotic Participation Proportion,}\; p_{D} = \frac{\hat{c}}{D}
+\text{If a fitted asymptotic exponential model is given by,}\\
+\hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; \hat{b}<0
+\text{Then,}\\
+\text{Asymptotic Participation Proportion,}\quad p_{D} = \frac{\hat{c}}{D}
 \end{aligned}
 ```
 Where,
@@ -461,6 +461,7 @@ Where,
 \begin{aligned}
 \hat{c} &= \text{Estimated limiting predicted participant count as } x\to\infty \\
 D &= \text{A specified participant reference quantity}
+\end{aligned}
 ```
 And,
 ```math
@@ -472,7 +473,7 @@ N &\quad \text{Total registered participants} \\
 M &\quad \text{Maximum observed attendance} \\
 u &\quad \text{Number of unique participants in sessions}
 \end{aligned}
-\right
+\right.
 ```
 
 ## Repository Structure
