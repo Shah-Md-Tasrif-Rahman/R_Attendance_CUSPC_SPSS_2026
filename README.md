@@ -1,4 +1,4 @@
-# Statistical Analysis of an Online Course Attendance
+# Statistical Analysis of Online Course Attendance
 
 [![Hits](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026.svg)](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/)
 
@@ -8,7 +8,7 @@ This repository contains statistical analyses of the attendance dataset of an SP
 
 This project examines participant attendance patterns across multiple sessions and compares regression models for describing attendance trajectories in this course and potentially similar courses.
 
-Main tools used for this project are: **R, renv, Jamovi, and Quarto.**
+Main tools used for this project are: **R, renv, jamovi, and Quarto.**
 
 *This repository also contains a pseudonymized version of the original dataset for replication and future uses.*
 
@@ -33,7 +33,7 @@ The CSV files for the 10 sessions were extracted and combined, and then attendan
 
 The original dataset contained participants' real names, which would compromise their privacy if published. To make the dataset publicly available, the names were pseudonymized, and new datasets were created using those pseudonyms. The pseudonymized datasets were then used for furthur statistical analysis.
 
-The repository is designed so the analytical/visualization portion doesn't require the original dataset with PII.
+The repository is designed so the analytical/visualization portion does not require the original dataset with PII.
 
 **Check out the [pseudonymized master_dataset](./Pseudonymization_process/Public_datasets/pseudonymized_master_dataset_full_context.xlsx)**
 
@@ -43,7 +43,7 @@ The repository is designed so the analytical/visualization portion doesn't requi
 
 1. How is the attendance duration of participants distributed?
 
-2. Is there a difference in participants' mean attendance duration between Tuesdays and Fridays?
+2. Is there a systematic difference in participants' attendance duration between Tuesdays and Fridays?
 
 3. Which regression model explains the participant attendance pattern best?
 
@@ -86,7 +86,7 @@ Let's see some descriptive statistics for the attendance duration of participant
 
 | Statistic | Value |
 |:----------|------:|
-| *N* | 400 |
+| Participant-session observations (*N*) | 400 |
 | Mean | 71.5 |
 | SD | 33.1 |
 | SE | 1.66 |
@@ -138,15 +138,15 @@ The paired differences were assessed for normality. Given the observed distribut
 
 *Note*. SD = standard deviation, SE = standard error.
 
-The Wilcoxon signed-rank test `didn't provide sufficient evidence of a difference between Tuesday and Friday attendance durations`, *W* = 747, *p* = .108.
+The Wilcoxon signed-rank test `did not provide sufficient evidence of a difference between Tuesday and Friday attendance durations`, *W* = 747, *p* = .108.
 
 ![Tuesday_vs_Friday](./Graphs_and_tables/Images/Tuesday_vs_Friday.png)
 
-So there's some difference between the attendance duration, but it's not statistically significant.
+There appears to be a difference in attendance duration, but it's not statistically significant.
 
 ## 3rd Research Question
 
-Let's look at how the participant attendance number is distributed first.
+First, let's examine how attendance counts vary across sessions.
 
 ![Attendance_across_sessions](./Graphs_and_tables/Images/Attendance_across_sessions.png)
 
@@ -268,7 +268,7 @@ The log-linear model shows less evidence of residual autocorrelation (Durbin–W
 
 We therefore examine **exponential decay and asymptotic exponential decay models** as alternative specifications.
 
-The preceding analyses were conducted in Jamovi. We then use R's nonlinear least squares function, `nls()`, to fit the alternative models.
+The preceding analyses were conducted in jamovi. We then use R's nonlinear least squares function, `nls()`, to fit the alternative models.
 
 ### Regression Model Fitting
 
@@ -422,19 +422,19 @@ c &= \text{Limiting predicted participant count as } \alpha\to\infty \\
 ![Residual_vs_fitted_exponential_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_exponential_snf_model.png)
 ![Residual_vs_fitted_asymptotic_snf_model](./Graphs_and_tables/Images/Residual_vs_fitted_asymptotic_snf_model.png)
 
-As we can see, **for both sets of regression models, the asymptotic exponential models provided the best in-sample fit**. Among the candidate models considered, this model provided the strongest in-sample fit to the observed attendance trajectory.
+Across both time specifications, **the asymptotic exponential models provided the best in-sample fit among the candidate models considered**.
 
-It captured **a rapid initial decline followed by progressively smaller decreases, approaching a non-zero asymptote as the explanatory variable increases**. The asymptote represents **a theoretical persistent-attendance level**. This pattern is consistent with **a possible mechanism in which attendance declines toward a smaller long-run level, although the fitted curve alone can't establish that mechanism**.
+It captured **a rapid initial decline followed by progressively smaller decreases, approaching a non-zero asymptote as the explanatory variable increases**. The asymptote represents **a theoretical persistent-attendance level**. This pattern is consistent with **a possible mechanism in which attendance declines toward a smaller long-run level, although the fitted curve alone cannot establish that mechanism**.
 
 Since this dataset contains only 10 sessions and represents a single attendance sequence, this interpretation should be treated as a testable hypothesis rather than evidence of a universal attendance law.
 
-**Two sets of models were fitted because attendance records for sessions 7 and 11 were missing, leaving 10 observed sessions out of 12. So the initial plan was to just use a set of regression model using days since first session as explanatory variable. But to be congruent with the literature about this topic, another set of regression model using session number as explanatory variable was needed. Calendar time preserves the actual elapsed intervals between observed sessions, whereas session number represents course progression. The choice of explanatory variable is entirely dependant on data quality and the specific context of the dataset being worked on.**
+**Two sets of models were fitted because attendance records for sessions 7 and 11 were missing, leaving 10 observed sessions out of 12. So the initial plan was to just use a set of regression model using days since first session as explanatory variable. But to be congruent with the literature about this topic, another set of regression model using session number as explanatory variable was needed. Calendar time preserves the actual elapsed intervals between observed sessions, whereas session number represents course progression. The choice of explanatory variable is dependent on data quality and the specific context of the dataset being worked on.**
 
 ## Literature Review
 
-**Massive Open Online Course (MOOC)** is a completely new education method which appeared in 2012. MOOCs are great for life-long learning and educational resource sharing. Compared with traditional education, MOOCs suffer more severe dropout problem. For most courses, less than 13% of students could follow **(Chen & Zhang, 2017, p. 1)**.
+**Massive Open Online Courses (MOOCs)** gained widespread prominence in 2012, expanding access to online learning at scale. MOOCs are great for life-long learning and educational resource sharing. Compared with traditional education, MOOCs suffer more severe dropout problem. For most courses, less than 13% of students could follow **(Chen & Zhang, 2017, p. 1)**.
 
-Although the SPSS course dataset analyzed in this project doesn't represent a MOOC, the course shares some structural similarities with MOOCs. The course had three assignments and a final project. Certificates were awarded separately based on participation and final project completion. Nonetheless, this dataset exhibited an attendance trajectory similar to those reported in studies of MOOCs.
+Although the SPSS course dataset analyzed in this project does not represent a MOOC, the course shares some structural similarities with MOOCs. The course had three assignments and a final project. Certificates were awarded separately based on participation and final project completion. Nonetheless, this dataset exhibited an attendance trajectory similar to those reported in studies of MOOCs.
 
 **Dai et al. (2025)** utilized a collection of MOOCs offered through Coursera by the University of Pennsylvania from 2015 to 2025, which includes over 200 courses and has been used by over 5.7 million individual users. According to **Dai et al. (2025)**, "The findings suggest that stopout in MOOCs generally follows an exponential decay pattern across graded assessments, but the disproportionately high stopout rate at the first graded assessment indicates that early disengagement follows a different underlying mechanism" **(p. 4)**.
 
@@ -444,9 +444,9 @@ Although the SPSS course dataset analyzed in this project doesn't represent a MO
 
 **Evans et al. (2016)** utilized a dataset of 44 Coursera MOOCs, comprising over 2.1 million student observations across more than 2,900 lectures. According to **Evans et al. (2016)**, "The pattern of lecture watching across courses is quite similar: high initial engagement that falls off rapidly and, in most instances, stabilizes at a low level. The rate of decline varies, but in all cases the greatest decline in participation occurs during the first ten lectures" **(p. 21)**.
 
-**Taken together, these studies document patterns of declining participation and subsequent stabilization in MOOCs. In this project, the asymptotic exponential regression model provided a substantially better fit than the linear and ordinary exponential regression models, yielding an estimated non-zero asymptote that represents the model-implied limiting attendance level. Building on this result, the project proposes an *Asymptotic Participation Proportion*, a model-derived measure expressing the estimated long-term attendance level relative to a specified participant reference population. This measure offers a model-based summary of the attendance trajectory, complementing conventional measures of course completion and individual persistence.**
+**Taken together, these studies document patterns of declining participation and subsequent stabilization in MOOCs. In this project, the asymptotic exponential regression model provided a substantially better fit than the linear and ordinary exponential regression models, yielding an estimated non-zero asymptote that represents the model-implied limiting attendance level. Building on this result, the project proposes an *Asymptotic Participation Proportion*, a model-derived measure expressing the estimated long-term attendance level relative to a specified participant reference population. This proposed measure may offer a model-based summary of the attendance trajectory, complementing conventional measures of course completion and individual persistence. Its validity and practical usefulness remain to be evaluated empirically.**
 
-## Asymptotic Participation Proportion (APP)
+## Proposed Asymptotic Participation Proportion (APP)
 
 If a fitted asymptotic exponential regression model is given by,
 ```math
@@ -454,7 +454,7 @@ If a fitted asymptotic exponential regression model is given by,
 \hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; \hat{b}<0
 \end{aligned}
 ```
-Then we can define,
+Then we define the following model-derived, reference-relative measure:
 ```math
 \begin{aligned}
 \text{Asymptotic Participation Proportion (APP),}\quad p_{D} = \frac{\hat{c}}{D}
@@ -484,17 +484,17 @@ For the context of our dataset,
 ```math
 \begin{aligned}
 \text{Estimated limiting participant count for calendar-time asymptotic model,}\; \hat{c}_{calendar} &= 23.199 \\
-\text{Estimated limiting participant count for session-number asymptotic model,}\; \hat{c}_{\session} &= 21.602 \\
-i = M &= 74 \\
+\text{Estimated limiting participant count for session-number asymptotic model,}\; \hat{c}_{session} &= 21.602 \\
+i &= M = 74 \\
 N &= 111 \\
-\therefore \text{APP for calendar-time asymptotic model considering initial and maximum attendance,}\; p_{i} = p_{M} &= \frac{23.199}{74} = 0.3135 \\
-\therefore \text{APP for calendar-time asymptotic model considering total number of registered participants,}\; p_{N} &= \frac{23.199}{111} = 0.209 \\
-\therefore \text{APP for session-number asymptotic model considering initial and maximum attendance,}\; p_{i} = p_{M} &= \frac{21.602}{74} = 0.2919 \\
-\therefore \text{APP for session-number asymptotic model considering total number of registered participants,}\; p_{N} &= \frac{21.602}{111} = 0.1946 
+\therefore \text{APP for calendar-time asymptotic model considering initial and maximum attendance,}\; p_{i (calendar)} = p_{M (calendar)} &= \frac{23.199}{74} = 0.3135 \\
+\therefore \text{APP for calendar-time asymptotic model considering total number of registered participants,}\; p_{N (calendar)} &= \frac{23.199}{111} = 0.209 \\
+\therefore \text{APP for session-number asymptotic model considering initial and maximum attendance,}\; p_{i (session)} = p_{M (session)} &= \frac{21.602}{74} = 0.2919 \\
+\therefore \text{APP for session-number asymptotic model considering total number of registered participants,}\; p_{N (session)} &= \frac{21.602}{111} = 0.1946 
 \end{aligned}
 ```
 
-These results indicate that the estimated asymptotic attendance level relative to initial and maximum observed attendance was 31.35% for the calendar-time model and 29.19% for the session-number model. Relative to the total number of registered participants, the estimated asymptotic attendance level was 20.90% for the calendar-time model and 19.46% for the session-number model.
+Under the fitted models, the estimated asymptotic attendance levels were equivalent to 31.35% of initial/maximum observed attendance for the calendar-time model and 29.19% for the session-number model. Relative to the 111 registered participants, the estimated asymptotic attendance levels were 20.90% and 19.46%, respectively.
 
 #### Potential Uses and Implications
 
@@ -522,9 +522,47 @@ This proposed measure may help course designers and instructors describe and com
 
 ## Limitations
 
+1. The attendance trajectory is based on only 10 observed sessions, limiting the robustness of model selection, the precision of parameter estimates, and inference about the long-run attendance level.
+
+2. Attendance records for sessions 7 and 11 are missing because of technical errors. Consequently, the observed trajectory does not represent a complete record of attendance across all 12 course sessions.
+
+3. The precision of Asymptotic Participation Proportion (APP) depends on the uncertainty associated with the estimated asymptote. A wide confidence interval for the estimated asymptote would imply substantial uncertainty in APP when the reference count is treated as fixed.
+
+4. The dataset represents a single course, limiting the extent to which the observed attendance pattern and estimated APP values can be generalized to other courses, instructors, participant populations, or teaching formats.
+
+5. The estimated asymptotic attendance level depends on both the explanatory variable scale and the fitted model specification. Calendar time represents elapsed time, whereas session number represents course progression. Consequently, the resulting asymptotes and APP values need not be identical.
+
+6. The asymptotic exponential model provided the best in-sample fit among the candidate models considered, but its predictive performance on future sessions has not been established.
+
+7. Recorded attendance duration and session attendance counts are operational measures of participation. They do not directly measure attention, engagement with course material, learning, or completion of course activities.
+
+8. The Tuesday–Friday comparison is based on participants with usable paired observations. Its findings may not generalize to participants excluded from the paired analysis, and the comparison does not establish that the weekday itself caused any difference in attendance duration.
+
 ## Acknowledgements
 
+Special thanks to **Md Ahsanul Islam (Himel)** for generously providing access to the original attendance dataset, and to **Sucheen Dewan** for thoughtful suggestions on the regression plots and table design. Their support and contributions played an important role in improving this project.
+
 ## Repository Structure
+
+- `README.md` - Main landing page for the project
+
+- `Graphs_and_tables/`- Contains all images, R, and Quarto files related to statistical analysis 
+
+- `Jamovi_files/` - Contains all jamovi files and outputs with images
+
+- `Pseudonymization_process/` - Contains all the datasets and R files related to pseudonymization
+
+[View the jamovi HTML report](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Jamovi_files/Reports/HTMLs/Combined_output.html)
+
+[View the jamovi PDF report](./Jamovi_files/Reports/PDFs/Combined_output.pdf)
+
+[View the Quarto HTML report](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Graphs_and_tables/Quarto/Graphs_and_tables_output.html)
+
+[View the Quarto PDF report](./Graphs_and_tables/Quarto/Graphs_and_tables_output.pdf)
+
+## Reproducibility
+
+The analysis was conducted using R, jamovi, and Quarto, with renv used for R package management. The scripts and project files are organized in the repository to facilitate inspection and reproducibility. To reproduce the analysis, restore the R environment using renv and run the relevant scripts and Quarto documents with modified file locations in scripts.
 
 ## References
 
