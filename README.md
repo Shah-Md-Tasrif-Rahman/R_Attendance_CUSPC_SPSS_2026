@@ -446,7 +446,7 @@ Although the SPSS course dataset analyzed in this project doesn't represent a MO
 
 **Taken together, these studies document patterns of declining participation and subsequent stabilization in MOOCs. In this project, the asymptotic exponential regression model provided a substantially better fit than the linear and ordinary exponential regression models, yielding an estimated non-zero asymptote that represents the model-implied limiting attendance level. Building on this result, the project proposes an *Asymptotic Participation Proportion*, a model-derived measure expressing the estimated long-term attendance level relative to a specified participant reference population. This measure offers a model-based summary of the attendance trajectory, complementing conventional measures of course completion and individual persistence.**
 
-## Asymptotic Participation Proportion
+## Asymptotic Participation Proportion (APP)
 
 If a fitted asymptotic exponential regression model is given by,
 ```math
@@ -454,31 +454,75 @@ If a fitted asymptotic exponential regression model is given by,
 \hat{y} = \hat{c} + \hat{a}e^{\hat{b}x},\; \hat{b}<0
 \end{aligned}
 ```
-Then,
+Then we can define,
 ```math
 \begin{aligned}
-\text{Asymptotic Participation Proportion,}\quad p_{D} = \frac{\hat{c}}{D}
+\text{Asymptotic Participation Proportion (APP),}\quad p_{D} = \frac{\hat{c}}{D}
 \end{aligned}
 ```
 Where,
 ```math
 \begin{aligned}
+\hat{y} &= \text{Model-predicted participant count at }x \\
 \hat{c} &= \text{Estimated limiting predicted participant count as } x\to\infty \\
-D &= \text{A specified participant reference quantity}
+D &= \text{A specified reference count of participants}
 \end{aligned}
 ```
-And,
+Here, *D* denotes one of the following participant reference quantities:
 ```math
 D =
 \left\{
 \begin{aligned}
-i &\quad \text{Initial-session attendance} \\
-N &\quad \text{Total registered participants} \\
-M &\quad \text{Maximum observed attendance} \\
-u &\quad \text{Number of unique participants in sessions}
+i &\quad \text{Attendance at the initial observed session} \\
+N &\quad \text{Total number of registered participants} \\
+M &\quad \text{Maximum observed attendance across sessions}
 \end{aligned}
 \right.
 ```
+
+For the context of our dataset,
+```math
+\begin{aligned}
+\text{Estimated limiting participant count for calendar-time asymptotic model,}\; \hat{c}_{calendar} &= 23.199 \\
+\text{Estimated limiting participant count for session-number asymptotic model,}\; \hat{c}_{\session} &= 21.602 \\
+i = M &= 74 \\
+N &= 111 \\
+\therefore \text{APP for calendar-time asymptotic model considering initial and maximum attendance,}\; p_{i} = p_{M} &= \frac{23.199}{74} = 0.3135 \\
+\therefore \text{APP for calendar-time asymptotic model considering total number of registered participants,}\; p_{N} &= \frac{23.199}{111} = 0.209 \\
+\therefore \text{APP for session-number asymptotic model considering initial and maximum attendance,}\; p_{i} = p_{M} &= \frac{21.602}{74} = 0.2919 \\
+\therefore \text{APP for session-number asymptotic model considering total number of registered participants,}\; p_{N} &= \frac{21.602}{111} = 0.1946 
+\end{aligned}
+```
+
+These results indicate that the estimated asymptotic attendance level relative to initial and maximum observed attendance was 31.35% for the calendar-time model and 29.19% for the session-number model. Relative to the total number of registered participants, the estimated asymptotic attendance level was 20.90% for the calendar-time model and 19.46% for the session-number model.
+
+#### Potential Uses and Implications
+
+1. Estimating the scale of sustained attendance
+
+2. *p<sub>N</sub>* helps interpreting long-run attendance relative to registration
+
+3. *p<sub>i</sub>* helps to compare long-run attendance relative to starting level
+
+4. Comparing calendar-time and session-number models helps assess how sensitive the estimated reference-relative attendance level is to the choice of time scale
+
+5. Build reference distributions across multiple comparable courses, once sufficient datasets are available
+
+6. Compare estimated limiting attendance relative to registration across comparable course offerings
+
+7. Explore whether different online, hybrid, or classroom formats exhibit different reference-relative attendance levels
+
+8. Describe differences between cohorts with similar registration definitions and session structures
+
+A particularly useful future application would be to compare many course offerings and investigate whether the proposed measure has a stable, interpretable relationship with other outcomes, such as completion or assignment submission. Those would be separate empirical research questions, not properties guaranteed by the formula.
+
+**A further research question is whether attendance in in-person courses exhibits a similar asymptotic pattern. Investigating this across comparable courses would be a meaningful future research direction.**
+
+This proposed measure may help course designers and instructors describe and compare estimated long-run attendance across comparable course offerings. Its practical usefulness would need to be evaluated through further research.
+
+## Limitations
+
+## Acknowledgements
 
 ## Repository Structure
 
