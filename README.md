@@ -1,6 +1,7 @@
 # Statistical Analysis of Online Course Attendance
 
 [![Hits](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026.svg)](https://hits.sh/github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/)
+[![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/shah-md-tasrif-rahman/r_attendance_cuspc_spss_2026?utm_source=readme&utm_medium=badge)
 
 ## Overview
 
@@ -551,6 +552,8 @@ Special thanks to **Md Ahsanul Islam (Himel)** for generously providing access t
 - `Jamovi_files/` - Contains all jamovi files and outputs with images
 
 - `Pseudonymization_process/` - Contains all the datasets and R files related to pseudonymization
+
+[![Architecture diagram of shah-md-tasrif-rahman/r_attendance_cuspc_spss_2026](https://gitdiagram.com/shah-md-tasrif-rahman/r_attendance_cuspc_spss_2026/diagram.png)](https://gitdiagram.com/shah-md-tasrif-rahman/r_attendance_cuspc_spss_2026?utm_source=readme&utm_medium=picture)
 
 [View the jamovi HTML report](https://htmlpreview.github.io/?https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026/blob/main/Jamovi_files/Reports/HTMLs/Combined_output.html)
 
