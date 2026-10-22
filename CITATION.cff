@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+
+title: "Statistical Analysis of Online Course Attendance"
+
+message: >
+  If you use the dataset, proposed Asymptotic Participation Proportion (APP),
+  mathematical formulations, analytical methods, or source code from this
+  repository, please cite this work.
+
+type: software
+
+authors:
+  - family-names: "Rahman"
+    given-names: "Shah Md. Tasrif"
+
+abstract: >
+  This repository presents an exploratory statistical analysis of online
+course attendance, including a proposed Asymptotic Participation Proportion
+(APP) for describing estimated long-run attendance. It includes supporting
+mathematical formulations, a pseudonymized dataset, and analysis code.
+The source code is licensed under the MIT License, while the dataset is
+licensed under CC BY 4.0.
+
+license: "MIT"
+
+repository-code: "https://github.com/Shah-Md-Tasrif-Rahman/R_Attendance_CUSPC_SPSS_2026"
+
+version: "1.0.0"
+
+date-released: 2026-10-22
+
+keywords:
+  - attendance-analysis
+  - asymptotic-participation-proportion
+  - online-learning
+  - nonlinear-regression
+  - regression-analysis
+  - r-programming
+  - quarto
