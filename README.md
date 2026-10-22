@@ -35,9 +35,9 @@ The original dataset contained participants' real names, which would compromise 
 
 The repository is designed so the analytical/visualization portion does not require the original dataset with PII.
 
-**Check out the [pseudonymized master_dataset](./Pseudonymization_process/Public_datasets/pseudonymized_master_dataset_full_context.xlsx)**
+**Check out the [pseudonymized master_dataset](./Pseudonymization_process/Public_datasets/csv/pseudonymized_master_dataset_full_context.csv)**
 
-**Check out [all datasets](./Pseudonymization_process/Public_datasets/)**
+**Check out [all datasets](./Pseudonymization_process/Public_datasets/csv)**
 
 ## Research Questions
 
@@ -563,6 +563,17 @@ Special thanks to **Md Ahsanul Islam (Himel)** for generously providing access t
 ## Reproducibility
 
 The analysis was conducted using R, jamovi, and Quarto, with renv used for R package management. The scripts and project files are organized in the repository to facilitate inspection and reproducibility. To reproduce the analysis, restore the R environment using renv and run the relevant scripts and Quarto documents with modified file locations in scripts.
+
+## Citation and Licensing
+
+If you use this project's dataset, proposed Asymptotic Participation Proportion (APP), mathematical formulations, analytical methods, or source code, please cite this work using the metadata provided in [`CITATION.cff`](./CITATION.cff).
+
+### Licenses
+
+- **Source code:** Licensed under the [MIT License](./LICENSE).
+- **Dataset:** Licensed under [CC BY 4.0](./LICENSE-DATA), permitting reuse and adaptation with appropriate attribution.
+
+These licenses apply to their respective materials. Third-party materials, if any, remain subject to their original licensing terms.
 
 ## References
 
