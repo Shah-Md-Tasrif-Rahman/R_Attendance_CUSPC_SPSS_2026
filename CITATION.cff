@@ -15,11 +15,11 @@ authors:
 
 abstract: >
   This repository presents an exploratory statistical analysis of online
-course attendance, including a proposed Asymptotic Participation Proportion
-(APP) for describing estimated long-run attendance. It includes supporting
-mathematical formulations, a pseudonymized dataset, and analysis code.
-The source code is licensed under the MIT License, while the dataset is
-licensed under CC BY 4.0.
+  course attendance, including a proposed Asymptotic Participation Proportion
+  (APP) for describing estimated long-run attendance. It includes supporting
+  mathematical formulations, a pseudonymized dataset, and analysis code.
+  The source code is licensed under the MIT License, while the dataset is
+  licensed under CC BY 4.0.
 
 license: "MIT"
 
